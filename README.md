@@ -1,6 +1,4 @@
 # KVStore
-(This project requires Python 3.5+)
-
 ## Background
 Basic Key/Value store.
 
@@ -18,6 +16,12 @@ When data needs to be retrieved, the event loop sends a signal (want_read) to th
   which the event loop polls for.
 
 ## To Install
+(This project requires Python 3.5+)
+0. Install virtualenv if you haven't already:
+```
+sudo apt install python3-venv
+```
+
 1. Navigate to a parent directory.
 
 2. Create a virtual environment & activate it (Called KVStore in this case):
