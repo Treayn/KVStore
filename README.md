@@ -18,26 +18,26 @@ When data needs to be retrieved, the event loop sends a signal (want_read) to th
 ## To Install
 (This project requires Python 3.5+)
 
-0. Install virtualenv if you haven't already:
+0. Install virtualenv & git if you haven't already:
 ```
-sudo apt install python3-venv
+sudo apt install python3-venv git
 ```
 
-1. Navigate to a parent directory.
+1. Navigate to a parent directory and clone this repository:
 ```
 cd ~/
+git clone https://github.com/Treayn/KVStore.git
 ```
 
-2. Create a virtual environment & activate it (Called KVStore in this case):
+2. Create virtual environment & activate it:
 ```
 python3 -m venv KVStore
 cd KVStore/
 source bin/activate
 ```
 
-3. Clone this repository & install requirements:
+3. Install requirements:
 ```
-git clone https://github.com/Treayn/KVStore.git
 pip install -r requirements.txt
 ```
 
@@ -48,6 +48,7 @@ python scripts/main.py
 ```
 
 2. Perform CRUD operations:
+Open a new terminal & enter:
 ```
 # To put:
 curl -H 'Content-Type: application/json' -X PUT -d '{"name": "Gideon"}' localhost:8080/data/name
