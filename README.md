@@ -24,6 +24,9 @@ sudo apt install python3-venv
 ```
 
 1. Navigate to a parent directory.
+```
+cd ~/
+```
 
 2. Create a virtual environment & activate it (Called KVStore in this case):
 ```
