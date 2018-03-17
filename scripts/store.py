@@ -16,6 +16,7 @@ class StorageThread(threading.Thread):
         self._out_ready = out_ready
         
         self._dict = {}
+        self._need_update = False
         self._load_data()
 
         self._last_recorded_time = datetime.now()
@@ -31,6 +32,7 @@ class StorageThread(threading.Thread):
 
     def _dump_data(self):
         pickle.dump(self._dict, open("name.db", "wb"))
+        self._need_update = False
     
     def _load_data(self):
         # Check for prior value and initialize if needed.
@@ -48,6 +50,7 @@ class StorageThread(threading.Thread):
         # Pop (most recent) name off stack.
         self._dict['name'] = self._in_queue.get_nowait()
         self._in_queue.task_done()
+        self._need_update = True
         
         # Flush (older values from) stack.
         while not self._in_queue.empty():
@@ -61,18 +64,19 @@ class StorageThread(threading.Thread):
     def run(self):
         while not self._terminator.is_set():
             self._current_time = datetime.now()
-
+            
             if self._need_data.is_set():
                 self._return_data()
-                
+            
+            # Check for fresh data.
             if self._in_queue.qsize() > 0:
                 self._update_data()
  
-                # Write (new data) to disk every second.
-                if (self._current_time - self._last_recorded_time).total_seconds() > 1:
-                    self._dump_data()
-                    self._last_recorded_time = self._current_time
-                    print("Committed changes to disk")
+            # Write (new data) to disk every 5 seconds.
+            if ((self._current_time - self._last_recorded_time).total_seconds() > 5) and self._need_update:
+                self._dump_data()
+                self._last_recorded_time = self._current_time
+                print("Committed changes to disk")
 
 
 class Store:
