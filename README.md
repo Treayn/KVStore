@@ -17,6 +17,7 @@ When data needs to be retrieved, the event loop sends a signal (want_read) to th
 
 ## To Install
 (This project requires Python 3.5+)
+
 0. Install virtualenv if you haven't already:
 ```
 sudo apt install python3-venv
